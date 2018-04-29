@@ -33,4 +33,47 @@ public class Absence extends AbstractBaseEntity {
         this.reason = reason;
         this.employee = employee;
     }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public short getTimeMinutes() {
+        return timeMinutes;
+    }
+
+    public void setTimeMinutes(short timeMinutes) {
+        this.timeMinutes = timeMinutes;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return "Absence{" +
+                "date=" + date +
+                ", timeMinutes=" + timeMinutes +
+                ", reason='" + reason + '\'' +
+                ", employee=" + employee +
+                ", id=" + id +
+                '}';
+    }
 }

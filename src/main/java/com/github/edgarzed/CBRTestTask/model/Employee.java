@@ -2,6 +2,7 @@ package com.github.edgarzed.CBRTestTask.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.StringJoiner;
 
 @Entity
 @Table(name = "employees")
@@ -15,6 +16,9 @@ public class Employee extends AbstractBaseEntity {
 
     @Column(name = "last_name", nullable = false)
     private String lastName;
+
+    @Transient
+    private String fullName;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "position_id", nullable = false)
@@ -63,5 +67,14 @@ public class Employee extends AbstractBaseEntity {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    public String getFullName(){
+        if (fullName==null) {
+            StringJoiner stringJoiner = new StringJoiner(" ");
+            stringJoiner.add(firstName).add(middleName).add(lastName);
+            fullName = stringJoiner.toString();
+        }
+        return fullName;
     }
 }

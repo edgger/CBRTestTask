@@ -26,4 +26,11 @@ public class Absence extends AbstractBaseEntity {
 
     public Absence() {
     }
+
+    public Absence(LocalDate date, short timeMinutes, String reason, Employee employee) {
+        this.date = date;
+        this.timeMinutes = timeMinutes;
+        this.reason = reason;
+        this.employee = employee;
+    }
 }

@@ -25,4 +25,43 @@ public class Employee extends AbstractBaseEntity {
 
     public Employee() {
     }
+
+    public Employee(String firstName, String middleName, String lastName, Position position) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.position = position;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
 }

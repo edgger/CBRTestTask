@@ -13,4 +13,8 @@ public class Position extends AbstractBaseEntity {
 
     public Position() {
     }
+
+    public String getName() {
+        return name;
+    }
 }

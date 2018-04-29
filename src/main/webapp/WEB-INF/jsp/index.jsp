@@ -1,0 +1,29 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>ФИО</th>
+        <th>Должность</th>
+        <th>Дата</th>
+        <th>Время</th>
+        <th>Причина</th>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <#else>
+    <tr>
+        <td>No available books</td>
+    </tr>
+</table>
+</body>
+</html>

@@ -7,9 +7,9 @@ import javax.persistence.*;
 @MappedSuperclass
 @Access(AccessType.FIELD)
 public abstract class AbstractBaseEntity {
-
+    //TODO: id generating strategy
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
     protected AbstractBaseEntity() {

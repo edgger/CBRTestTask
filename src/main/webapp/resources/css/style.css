@@ -1,0 +1,20 @@
+div.tableContainer {
+    display: table;
+    border-spacing: 10px;
+}
+
+div.tableRow {
+    display: table-row;
+}
+
+.tableCell {
+    display: table-cell;
+}
+
+label input,select{
+    display:block;
+}
+
+.error{
+    color: red;
+}

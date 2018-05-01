@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
-<head>
-    <title>Title</title>
-</head>
+<jsp:include page="fragments/headTag.jsp"/>
 <body>
-<table>
+<jsp:include page="fragments/header.jsp"/>
+<h3>Табель отсутствия</h3>
+<table border="3">
     <tr>
         <th>ФИО</th>
         <th>Должность</th>
@@ -24,5 +24,8 @@
     </tr>
 </c:forEach>
 </table>
+<c:forEach begin="1" end="${lastPage}" varStatus="loop">
+    <a href="${pageContext.request.contextPath}/?page=${loop.index-1}">${loop.index}</a>
+</c:forEach>
 </body>
 </html>

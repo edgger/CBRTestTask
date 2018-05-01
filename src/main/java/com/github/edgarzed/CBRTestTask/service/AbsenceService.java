@@ -1,7 +1,7 @@
 package com.github.edgarzed.CBRTestTask.service;
 
 import com.github.edgarzed.CBRTestTask.model.Absence;
-import com.github.edgarzed.CBRTestTask.model.Employee;
+import com.github.edgarzed.CBRTestTask.model.Position;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -11,5 +11,11 @@ public interface AbsenceService {
 
     Collection<Absence> getAll();
 
-    Collection<Absence> getFiltered(Collection<Employee> employee, LocalDate date);
+    Collection<Absence> getPage(int start, int count);
+
+    Collection<Absence> getPageFiltered(int start, int count, String fname, String mname, String lname, Position position, LocalDate date);
+
+    long getCount();
+
+    long getCountFiltered(String fname, String mname, String lname, Position position, LocalDate date);
 }

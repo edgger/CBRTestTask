@@ -19,13 +19,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee create(String fname, String mname, String lname, Position position) {
-        Employee employee = new Employee(fname, mname, lname, position);
+    public Employee save(Employee employee) {
         return employeeDAO.save(employee);
     }
 
     @Override
     public Collection<Employee> getFiltered(String fname, String mname, String lname, Position position) {
+        fname = fname == null || fname.length() == 0 ? null : fname;
+        mname = mname == null || mname.length() == 0 ? null : mname;
+        lname = lname == null || lname.length() == 0 ? null : lname;
         return employeeDAO.getFiltered(fname, mname, lname, position);
     }
 }

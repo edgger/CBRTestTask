@@ -2,7 +2,7 @@ package com.github.edgarzed.CBRTestTask.service;
 
 import com.github.edgarzed.CBRTestTask.dao.AbsenceDAO;
 import com.github.edgarzed.CBRTestTask.model.Absence;
-import com.github.edgarzed.CBRTestTask.model.Employee;
+import com.github.edgarzed.CBRTestTask.model.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,22 @@ public class AbsenceServiceImpl implements AbsenceService {
     }
 
     @Override
-    public Collection<Absence> getFiltered(Collection<Employee> employee, LocalDate date) {
-        return absenceDAO.getFiltered(employee,date);
+    public Collection<Absence> getPageFiltered(int start, int count, String fname, String mname, String lname, Position position, LocalDate date) {
+        return absenceDAO.getPageFiltered(start, count, fname, mname, lname, position, date);
+    }
+
+    @Override
+    public Collection<Absence> getPage(int start, int count) {
+        return absenceDAO.getPage(start, count);
+    }
+
+    @Override
+    public long getCount() {
+        return absenceDAO.getCount();
+    }
+
+    @Override
+    public long getCountFiltered(String fname, String mname, String lname, Position position, LocalDate date) {
+        return absenceDAO.getCountFiltered(fname, mname, lname, position, date);
     }
 }

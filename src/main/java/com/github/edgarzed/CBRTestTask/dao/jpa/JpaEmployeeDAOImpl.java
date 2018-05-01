@@ -23,6 +23,7 @@ public class JpaEmployeeDAOImpl implements EmployeeDAO {
     }
 
     @Override
+    @Transactional
     public Employee save(Employee employee) {
         if (employee.isNew()) {
             em.persist(employee);
@@ -34,7 +35,7 @@ public class JpaEmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public Collection<Employee> getFiltered(String fname, String mname, String lname, Position position) {
-        return em.createQuery("SELECT e FROM Employee e WHERE (:fname is null or e.firstName = :fname) and (:mname is null or e.middleName = :mname) and (:lname is null or e.lastName = :lname) and (:position is null or e.position = :position)", Employee.class)
+        return em.createQuery("SELECT e FROM Employee e LEFT JOIN FETCH e.position WHERE (:fname is null or UPPER(e.firstName) = UPPER(:fname)) and (:mname is null or UPPER(e.middleName) = UPPER(:mname)) and (:lname is null or UPPER(e.lastName) = UPPER(:lname)) and (:position is null or e.position = :position)", Employee.class)
                 .setParameter("fname", fname)
                 .setParameter("mname", mname)
                 .setParameter("lname", lname)
@@ -44,6 +45,6 @@ public class JpaEmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public Collection<Employee> getAll() {
-        return em.createQuery("SELECT e FROM Employee e", Employee.class).getResultList();
+        return em.createQuery("SELECT e FROM Employee e LEFT JOIN FETCH e.position", Employee.class).getResultList();
     }
 }

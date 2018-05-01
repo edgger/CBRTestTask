@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
@@ -19,14 +19,23 @@
           p:username="${database.username}"
           p:password="${database.password}"/>
 
-    <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
-        <jdbc:script location="classpath:db/initDB.sql"/>
-        <jdbc:script encoding="utf-8" location="classpath:db/fillDB.sql"/>
-    </jdbc:initialize-database>
+    <!--<jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+        <jdbc:script location="classpath:db/migration/V1_0__create_tables.sql"/>
+        <jdbc:script encoding="utf-8" location="classpath:db/migration/V1_1__fill_db.sql"/>
+    </jdbc:initialize-database>-->
+
+    <bean id="flyway" class="org.flywaydb.core.Flyway" init-method="migrate">
+        <property name="baselineOnMigrate" value="true"/>
+        <!--<property name="locations" value="filesystem:/path/"/>-->
+        <property name="dataSource" ref="dataSource"/>
+        <!--<property name="validateOnMigrate" value="false"/>-->
+    </bean>
+
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           p:dataSource-ref="dataSource"
-          p:packagesToScan="com.github.edgarzed.CBRTestTask.model">
+          p:packagesToScan="com.github.edgarzed.CBRTestTask.model"
+          depends-on="flyway">
 
         <property name="jpaPropertyMap">
             <map>

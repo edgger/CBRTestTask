@@ -21,7 +21,7 @@
 
         <spring.version>5.0.5.RELEASE</spring.version>
         <hibernate.version>5.2.16.Final</hibernate.version>
-        <junit.version>4.12</junit.version>
+        <flyway.version>5.0.7</flyway.version>
     </properties>
 
     <dependencies>
@@ -60,11 +60,11 @@
         </dependency>
 
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>${flyway.version}</version>
         </dependency>
     </dependencies>
+
 
 </project>

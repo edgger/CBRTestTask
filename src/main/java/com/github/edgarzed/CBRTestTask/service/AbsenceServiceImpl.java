@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Collection;
 
+import static com.github.edgarzed.CBRTestTask.util.ServiceUtil.paramToLowerCase;
+
 @Service
 public class AbsenceServiceImpl implements AbsenceService {
     private final AbsenceDAO absenceDAO;
@@ -30,7 +32,7 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     @Override
     public Collection<Absence> getPageFiltered(int start, int count, String fname, String mname, String lname, Position position, LocalDate date) {
-        return absenceDAO.getPageFiltered(start, count, fname, mname, lname, position, date);
+        return absenceDAO.getPageFiltered(start, count, paramToLowerCase(fname), paramToLowerCase(mname), paramToLowerCase(lname), position, date);
     }
 
     @Override
@@ -45,6 +47,6 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     @Override
     public long getCountFiltered(String fname, String mname, String lname, Position position, LocalDate date) {
-        return absenceDAO.getCountFiltered(fname, mname, lname, position, date);
+        return absenceDAO.getCountFiltered(paramToLowerCase(fname), paramToLowerCase(mname), paramToLowerCase(lname), position, date);
     }
 }

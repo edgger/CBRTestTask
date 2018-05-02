@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
+import static com.github.edgarzed.CBRTestTask.util.ServiceUtil.paramToLowerCase;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -25,9 +27,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Collection<Employee> getFiltered(String fname, String mname, String lname, Position position) {
-        fname = fname == null || fname.length() == 0 ? null : fname;
-        mname = mname == null || mname.length() == 0 ? null : mname;
-        lname = lname == null || lname.length() == 0 ? null : lname;
-        return employeeDAO.getFiltered(fname, mname, lname, position);
+        return employeeDAO.getFiltered(paramToLowerCase(fname), paramToLowerCase(mname), paramToLowerCase(lname), position);
     }
 }

@@ -1,5 +1,6 @@
 package com.github.edgarzed.CBRTestTask.web;
 
+import com.github.edgarzed.CBRTestTask.dto.AbsenceData;
 import com.github.edgarzed.CBRTestTask.model.Absence;
 import com.github.edgarzed.CBRTestTask.model.Employee;
 import com.github.edgarzed.CBRTestTask.model.Position;
@@ -58,6 +59,10 @@ public class MainController {
                          @RequestParam(value = "reason") String reason,
                          Model model) {
 
+        fname = fixStringParam(fname);
+        mname = fixStringParam(mname);
+        lname = fixStringParam(lname);
+
         model.addAttribute("fname", fname);
         model.addAttribute("mname", mname);
         model.addAttribute("lname", lname);
@@ -65,10 +70,6 @@ public class MainController {
         model.addAttribute("date", date);
         model.addAttribute("minutes", minutes);
         model.addAttribute("reason", reason);
-
-        fname = fixStringParam(fname);
-        mname = fixStringParam(mname);
-        lname = fixStringParam(lname);
 
         LocalDate localDate = null;
         short parseMinutes = 0;
@@ -135,12 +136,14 @@ public class MainController {
             localDate = (date == null || date.length() == 0) ? null : LocalDate.parse(date);
         } catch (DateTimeException ignored) {
         }
+
         fname = fixStringParam(fname);
         mname = fixStringParam(mname);
         lname = fixStringParam(lname);
 
         long totalCount = absenceService.getCountFiltered(fname, mname, lname, position, localDate);
         int start = getStartAddPageNumbers(page, model, totalCount);
+        Collection<AbsenceData> absenceData = AbsenceUtil.convertToDTO(absenceService.getPageFiltered(start, PAGE_SIZE, fname, mname, lname, position, localDate));
 
         Collection<Position> positions = positionService.getAll();
         model.addAttribute("positions", positions);
@@ -149,19 +152,16 @@ public class MainController {
         model.addAttribute("lname", lname);
         model.addAttribute("positionId", positionId);
         model.addAttribute("date", date);
-        model.addAttribute("absencesData", AbsenceUtil.convertToDTO(absenceService.getPageFiltered(start, PAGE_SIZE, fname, mname, lname, position, localDate)));
+        model.addAttribute("absencesData", absenceData);
         return "search";
     }
 
     private String fixStringParam(String param) {
-        if (param == null) {
-            return null;
+        if (param != null) {
+            String trimmed = param.trim();
+            return trimmed.length() == 0 ? null : trimmed;
         } else {
-            param = param.trim();
-            if (param.length() == 0) {
-                return null;
-            }
-            return param;
+            return null;
         }
     }
 

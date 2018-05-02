@@ -45,7 +45,7 @@ public class JpaAbsenceDAOImpl implements AbsenceDAO {
 
     @Override
     public Collection<Absence> getPageFiltered(int start, int count, String fname, String mname, String lname, Position position, LocalDate date) {
-        return em.createQuery("SELECT a FROM Absence a LEFT JOIN FETCH a.employee e LEFT JOIN FETCH e.position p WHERE (:fname is null or UPPER(e.firstName) = UPPER(:fname)) and (:mname is null or UPPER(e.middleName) = UPPER(:mname)) and (:lname is null or UPPER(e.lastName) = UPPER(:lname)) and (:position is null or e.position = :position) and (:date is null or a.date = :date) ORDER BY a.date DESC", Absence.class)
+        return em.createQuery("SELECT a FROM Absence a LEFT JOIN FETCH a.employee e LEFT JOIN FETCH e.position p WHERE (:fname is null or LOWER(e.firstName) = :fname) and (:mname is null or LOWER(e.middleName) = :mname) and (:lname is null or LOWER(e.lastName) = :lname) and (:position is null or e.position = :position) and (a.date = :date or :date is null) ORDER BY a.date DESC", Absence.class)
                 .setParameter("fname", fname)
                 .setParameter("mname", mname)
                 .setParameter("lname", lname)
@@ -63,7 +63,8 @@ public class JpaAbsenceDAOImpl implements AbsenceDAO {
 
     @Override
     public long getCountFiltered(String fname, String mname, String lname, Position position, LocalDate date) {
-        return (long) em.createQuery("SELECT COUNT (a.id) FROM Absence a LEFT JOIN a.employee e LEFT JOIN e.position p  WHERE (:fname is null or UPPER(e.firstName) = UPPER(:fname)) and (:mname is null or UPPER(e.middleName) = UPPER(:mname)) and (:lname is null or UPPER(e.lastName) = UPPER(:lname)) and (:position is null or e.position = :position) and (:date is null or a.date = :date)")
+        //https://stackoverflow.com/questions/44905452/postgresql-with-hibernate-could-not-determine-localdate-type-in-jpql-query
+        return (long) em.createQuery("SELECT COUNT (a.id) FROM Absence a LEFT JOIN a.employee e LEFT JOIN e.position p  WHERE (:fname is null or LOWER(e.firstName) = :fname) and (:mname is null or LOWER(e.middleName) = :mname) and (:lname is null or LOWER(e.lastName) = :lname) and (:position is null or e.position = :position) and (a.date = :date or :date is null)")
                 .setParameter("fname", fname)
                 .setParameter("mname", mname)
                 .setParameter("lname", lname)

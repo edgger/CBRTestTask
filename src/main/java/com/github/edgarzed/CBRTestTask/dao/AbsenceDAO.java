@@ -1,7 +1,7 @@
 package com.github.edgarzed.CBRTestTask.dao;
 
 import com.github.edgarzed.CBRTestTask.model.Absence;
-import com.github.edgarzed.CBRTestTask.model.Position;
+import com.github.edgarzed.CBRTestTask.model.Employee;
 
 import java.time.LocalDate;
 import java.util.Collection;
@@ -13,9 +13,9 @@ public interface AbsenceDAO {
 
     Collection<Absence> getPage(int start, int count);
 
-    Collection<Absence> getPageFiltered(int start, int count, String fname, String mname, String lname, Position position, LocalDate date);
+    Collection<Absence> getPageFiltered(int start, int count, Employee employee, LocalDate date);
 
     long getCount();
 
-    long getCountFiltered(String fname, String mname, String lname, Position position, LocalDate date);
+    long getCountFiltered(Employee employee, LocalDate date);
 }

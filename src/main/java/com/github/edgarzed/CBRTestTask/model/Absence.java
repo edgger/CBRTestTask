@@ -19,7 +19,7 @@ public class Absence extends AbstractBaseEntity {
     @Column(name = "reason", nullable = false)
     private String reason;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "employee_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Employee employee;

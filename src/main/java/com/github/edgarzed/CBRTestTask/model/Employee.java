@@ -19,7 +19,7 @@ public class Employee extends AbstractBaseEntity {
     @Transient
     private String fullName;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "position_id", nullable = false)
     private Position position;
 

@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Enumeration;
 
 @Controller
 public class MainController {
@@ -36,16 +34,11 @@ public class MainController {
     private static final int PAGE_SIZE = 20;
 
     @GetMapping("/")
-    public String root(@RequestParam(value = "page", required = false, defaultValue = "0") int currentPage,
-                       HttpServletRequest request, Model model) {
-        Enumeration<String> parameterNames = request.getParameterNames();
-
+    public String root(@RequestParam(value = "page", required = false, defaultValue = "0") int currentPage, Model model) {
         long totalCount = absenceService.getCount();
         int start = getStartAddPageNumbers(currentPage, model, totalCount);
 
         model.addAttribute("absencesData", AbsenceUtil.convertToDTO(absenceService.getPage(start, PAGE_SIZE)));
-        model.addAttribute("employees", employeeService.getFiltered(null, null, null, null));
-
         return "index";
     }
 
@@ -76,10 +69,10 @@ public class MainController {
         try {
             localDate = LocalDate.parse(date);
             parseMinutes = Short.parseShort(minutes);
-            if (parseMinutes > 1440) {
-                throw new NumberFormatException();
+            if (parseMinutes > 1440 || parseMinutes < 1) {
+                throw new IllegalArgumentException();
             }
-        } catch (NumberFormatException | DateTimeException e) {
+        } catch (IllegalArgumentException | DateTimeException e) {
             model.addAttribute("errorMessage", "Incorrect date/minutes data! Try again");
             return getCreate(model);
         }

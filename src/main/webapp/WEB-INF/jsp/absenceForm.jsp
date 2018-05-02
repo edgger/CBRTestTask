@@ -34,7 +34,7 @@
     </dl>
     <dl>
         <dt>Время (минут):</dt>
-        <dd><input type="number" name="minutes" value="${minutes}" required></dd>
+        <dd><input type="number" name="minutes" value="${minutes}" min="1" required></dd>
     </dl>
     <dl>
         <dt>Причина:</dt>

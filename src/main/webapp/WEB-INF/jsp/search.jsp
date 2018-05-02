@@ -47,7 +47,7 @@
     </c:forEach>
 </table>
 <c:forEach begin="1" end="${lastPage}" varStatus="loop">
-    <a href="${pageContext.request.contextPath}/search?lname=${lname}&fname=${fname}&mname=${mname}&positionId=${position.id}&date=${date}&page=${loop.index-1}">${loop.index}</a>
+    <a href="${pageContext.request.contextPath}/search?lname=${lname}&fname=${fname}&mname=${mname}&positionId=${position.id}&date=${date}&page=${loop.index-1}" <c:if test="${loop.index-1==currentPage}">style="background-color: darkcyan" </c:if>>${loop.index}</a>
 </c:forEach>
 </body>
 </html>

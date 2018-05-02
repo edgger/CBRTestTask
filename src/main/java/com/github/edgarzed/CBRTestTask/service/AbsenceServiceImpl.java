@@ -2,6 +2,7 @@ package com.github.edgarzed.CBRTestTask.service;
 
 import com.github.edgarzed.CBRTestTask.dao.AbsenceDAO;
 import com.github.edgarzed.CBRTestTask.model.Absence;
+import com.github.edgarzed.CBRTestTask.model.Employee;
 import com.github.edgarzed.CBRTestTask.model.Position;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,11 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     @Override
     public Collection<Absence> getPageFiltered(int start, int count, String fname, String mname, String lname, Position position, LocalDate date) {
-        return absenceDAO.getPageFiltered(start, count, paramToLowerCase(fname), paramToLowerCase(mname), paramToLowerCase(lname), position, date);
+        Employee employee = null;
+        if (fname!=null||mname!=null||lname!=null||position!=null){
+            employee = new Employee(paramToLowerCase(fname), paramToLowerCase(mname), paramToLowerCase(lname), position);
+        }
+        return absenceDAO.getPageFiltered(start, count, employee, date);
     }
 
     @Override
@@ -47,6 +52,10 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     @Override
     public long getCountFiltered(String fname, String mname, String lname, Position position, LocalDate date) {
-        return absenceDAO.getCountFiltered(paramToLowerCase(fname), paramToLowerCase(mname), paramToLowerCase(lname), position, date);
+        Employee employee = null;
+        if (fname!=null||mname!=null||lname!=null||position!=null){
+            employee = new Employee(paramToLowerCase(fname), paramToLowerCase(mname), paramToLowerCase(lname), position);
+        }
+        return absenceDAO.getCountFiltered(employee, date);
     }
 }
